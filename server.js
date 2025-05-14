@@ -1,5 +1,9 @@
 const express=require('express')
 const app=express() 
+const jwt=require('jsonwebtoken')
+
+
+app.use(express.json())
 
 const data=[
     {
@@ -16,8 +20,14 @@ const data=[
     }
 ]
 
-app.get("/",(req,res)=>{
+app.get("/posts",(req,res)=>{
    res.json(data)
+})
+
+app.post("/login",(req,res)=>{
+   const username=req.body.username
+   const user={name:username}
+   jwt.sign(user,process.env.ACCESS_TOKKEN_SECRET)
 })
 
 app.listen(3000,()=>{
